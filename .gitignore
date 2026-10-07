@@ -1,0 +1,24 @@
+# Environment
+backend/.env
+backend/.secret_key
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Kivy
+.kivy/
+
+# Texie local credentials
+~/.texie/
+
+# Docker
+.docker/
+
+# IDE
+.idea/
+.vscode/
+*.swp

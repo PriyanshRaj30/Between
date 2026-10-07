@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: texie_postgres
+    environment:
+      POSTGRES_USER: texie_user
+      POSTGRES_PASSWORD: texie_pass
+      POSTGRES_DB: texie_db
+    volumes:
+      - texie_pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: texie_backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://texie_user:texie_pass@postgres:5432/texie_db
+      ENVIRONMENT: production
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+volumes:
+  texie_pg_data:

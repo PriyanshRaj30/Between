@@ -1,0 +1,12 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir fastapi uvicorn[standard] asyncpg sqlalchemy \
+    alembic python-jose[cryptography] passlib[bcrypt] python-multipart \
+    cryptography pydantic pydantic-settings python-dotenv aiofiles
+
+COPY backend/ ./backend/
+
+EXPOSE 8000
+CMD ["python", "-m", "backend.main"]
